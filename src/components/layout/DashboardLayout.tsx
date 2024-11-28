@@ -6,11 +6,15 @@ import {
   Calendar,
   FileText,
   Home,
+  Menu,
+  X,
 } from 'lucide-react';
+import { useState } from 'react';
 
 export function DashboardLayout() {
   const { logout } = useAuthStore();
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -59,6 +63,20 @@ export function DashboardLayout() {
                   Documents
                 </Link>
               </div>
+
+              {/* Add mobile menu button */}
+              <div className="sm:hidden -mr-2 flex items-center">
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                >
+                  {isMobileMenuOpen ? (
+                    <X className="block h-6 w-6" />
+                  ) : (
+                    <Menu className="block h-6 w-6" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="flex items-center">
@@ -73,6 +91,42 @@ export function DashboardLayout() {
               </div>
             </div>
           </div>
+
+          {/* Add mobile menu */}
+          {isMobileMenuOpen && (
+            <div className="sm:hidden">
+              <div className="pt-2 pb-3 space-y-1">
+                <Link
+                  to="/"
+                  className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+                >
+                  <Home className="h-4 w-4 inline-block mr-1" />
+                  Dashboard
+                </Link>
+                <Link
+                  to="/training"
+                  className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+                >
+                  <BookOpen className="h-4 w-4 inline-block mr-1" />
+                  Training
+                </Link>
+                <Link
+                  to="/schedule"
+                  className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+                >
+                  <Calendar className="h-4 w-4 inline-block mr-1" />
+                  Schedule
+                </Link>
+                <Link
+                  to="/documents"
+                  className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+                >
+                  <FileText className="h-4 w-4 inline-block mr-1" />
+                  Documents
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
